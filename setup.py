@@ -5,18 +5,18 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='nlp-data-py',
-    version="0.0.1",
+    version="0.0.2",
     author="Madhu TV",
     author_email="madhavi.tv@gmail.com",
     description="Create Test, Train and Validation datasets for NLP. "
                 "Currently, creating these datasets from wikipedia is supported",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/madutv/nlp-data-py.git",
     packages=setuptools.find_packages(),
     entry_points={
         'console_scripts': [
-            'peace=dataset.command_line:peace',
+            'wiki_dataset=dataset.command_line:wiki_dataset',
         ],
     },
     classifiers=[
