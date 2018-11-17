@@ -54,50 +54,49 @@ In short the above command:
 - [--shuffle or -sf](#--shuffle-or--sf)
 
 #### --seed or -s:
-_`Description`_: List of initial Wiki Page names to start with. 
+`Description`: List of initial Wiki Page names to start with. 
 
-_`Default`_: None. If nothing is specified, items in [pickle](#--pickle-or--p) 
+`Default`: None. If nothing is specified, items in [pickle](#--pickle-or--p) 
 file will be read. If pickle file dose not exists, nothing will be done and 
 the code exits.
 
-_`Example`_: 
+`Example`: 
 ```
 wiki_dataset --seed Brain Human_Brain
 ```
 
 #### --match or -m: 
-**Description**: This option serves 2 purpose. One to track links in WikiPages 
+`Description`: This option serves 2 purpose. One to track links in WikiPages 
 and another to read additional pages either from links or [saved pickle](#--pickle-or--p) 
 file. Links that match the pattern will be considered to be added to datasets.
 Also see [limit](#--limit-or--l)  
 
-**Default**: "". All links from a wikipage will be considered and tracked.
+`Default`: "". All links from a wikipage will be considered and tracked.
 
-**Example**: 
+`Example`: In the below example, any links that match *neuro* or *neural* will be tracked 
+and/or read to create datasets. 
+
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural
 ```
-In the above example, any links that match *neuro* or *neural* will be tracked 
-and/or read to create datasets. 
 
 #### --recursive or -r:
-_Description_: If this option is true, then additional pages will be read 
+`Description`: If this option is true, then additional pages will be read 
 either based on links or previously scanned pickle file. This option will 
 be used in conjunction with limit to determine number of additional 
 pages to read.
 Also see [limit](#--limit-or--l)
 
 
-_Default_: true
+`Default`: true
 
-_`Example`_: 
+`Example`: In the below example, only Brain and Human_Brain wiki pages will be read. 
+However, links that match the match patter in the above pages will be tracked 
+and stored in a pickle file which may be used later on.
+
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -r false
 ```
-
-In the above example, only Brain and Human_Brain wiki pages will be read. 
-However, links that match the match patter in the above pages will be tracked 
-and stored in a pickle file which may be useful in future.
 
 ##### --limit or -l:
 **Description**: Wikipedia may contain way too many links especially when looking 
