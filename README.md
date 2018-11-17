@@ -24,7 +24,6 @@ wiki_dataset --seed Brain Human_Brain --match .*neuro|.*neural
 In short the above command:
  - **Read Wiki**: Reads Brain and Human_Brain pages from wikipedia
  - **Shuffle**: Shuffles data based on some default criteria
- 
  (see, [chunk_splitter](#--chunk_splitter-or--cs) & 
  [chunks_per_page](#--chunks_per_page-or--cp) for defaults) 
  - **Create Datasets**: Creates train, validation and test datasets in ./vars/ folder. 
