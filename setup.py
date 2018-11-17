@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='nlp-data-py',
-    version="0.0.2",
+    version="0.0.1",
     author="Madhu TV",
     author_email="madhavi.tv@gmail.com",
     description="Create Test, Train and Validation datasets for NLP. "
