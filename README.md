@@ -54,13 +54,13 @@ In short the above command:
 - [--shuffle or -sf](#--shuffle-or--sf)
 
 #### --seed or -s:
-**Description**: List of initial Wiki Page names to start with. 
+_`Description`_: List of initial Wiki Page names to start with. 
 
-**Default**: None. If nothing is specified, items in [pickle](#--pickle-or--p) 
+_`Default`_: None. If nothing is specified, items in [pickle](#--pickle-or--p) 
 file will be read. If pickle file dose not exists, nothing will be done and 
 the code exits.
 
-**Example**: 
+_`Example`_: 
 ```
 wiki_dataset --seed Brain Human_Brain
 ```
