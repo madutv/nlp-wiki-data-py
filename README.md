@@ -1,7 +1,7 @@
 Create Train, Test and Validation Datasets for NLP from wikipedia. Datasets are created 
 using provided seed WikiPages and also by traversing links within pages that meet the 
 specified match pattern. Idea is to leverage links within wiki pages to create more data. 
-The thought is that wikipedia will already contain links to additional pages  that are 
+The thought is, wikipedia will already contain links to additional pages that are 
 relevant and links within pages can be narrowed through pattern matching.
 
 ### Installation
@@ -16,19 +16,22 @@ relevant and links within pages can be narrowed through pattern matching.
 
 ### Command line
 
-#### QuickStart 
+#### QuickStart Example
 ```
 wiki_dataset --seed Brain Human_Brain --match .*neuro|.*neural 
 ```
 
 In short the above command:
  - **Read Wiki**: Reads Brain and Human_Brain pages from wikipedia
- - **Shuffle**: Shuffles data based on some default criteria  (see, 
- [chunk_splitter](#--chunk_splitter-or--cs) & [chunks_per_page](#--chunks_per_page-or--cp) for defaults) 
+ - **Shuffle**: Shuffles data based on some default criteria
+ 
+ (see, [chunk_splitter](#--chunk_splitter-or--cs) & 
+ [chunks_per_page](#--chunks_per_page-or--cp) for defaults) 
  - **Create Datasets**: Creates train, validation and test datasets in ./vars/ folder. 
  By default, split ratio is 80%, 10% and 10% for train, val and test datasets
- - **Extract Links**: Extracts any link that match the pattern mentioned in [--match](#--match-or--m) 
- option. In this example, links containing 'neuro' or 'neural' are tracked
+ - **Extract Links**: Extracts any link that match the pattern mentioned 
+ in [--match](#--match-or--m) option. In this example, links containing 
+ 'neuro' or 'neural' are tracked
  - **Read More**: Additional 20 pages from the above "Extract Links" are read 
  and appended to datasets and the links in those pages that match pattern 
  are also tracked.
@@ -36,7 +39,7 @@ In short the above command:
  file at ./vars/scanned.pkl. This will be useful when the same command 
  is run again. i.e. if the above command is re-run, Brain & Human_brain 
  & 20 pages from "Read More" will not be read again. Instead, the next 
- 20 pages due to "Extract Links" will be read and appened to datasets 
+ 20 pages due to "Extract Links" will be read and appended to datasets 
  in ./vars/
  
 #### Command Line Options
