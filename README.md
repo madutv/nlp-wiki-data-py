@@ -59,7 +59,7 @@ In short the above command:
 `Description`: List of initial Wiki Page names to start with. 
 
 `Default`: None. If nothing is specified, items in [pickle](#--pickle-or--p) 
-file will be read. If pickle file dose not exists, nothing will be done and 
+file will be read. If pickle file also dose not exists, nothing will be done and 
 the code exits.
 
 `Example`: 
@@ -93,29 +93,30 @@ Also see [limit](#--limit-or--l)
 `Default`: true
 
 `Example`: In the below example, only Brain and Human_Brain wiki pages will be read. 
-However, links that match the match patter in the above pages will be tracked 
+However, links that match the match patter from these pages will be tracked 
 and stored in a pickle file which may be used later on.
 
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -r false
 ```
 
-##### --limit or -l:
-**Description**: Wikipedia may contain way too many links especially when looking 
+#### --limit or -l:
+`Description`: Wikipedia may contain too many links especially when looking 
 at pages recursively. This option limits the number of additional pages to be read.
 This option will only be relevant if recursive is set to true.
 
-**Default** 20
+`Default` 20
 
-**Example**:
+`Example`: In the below example, along with reading Brain & Human_Brain 
+and tracking links that match the match pattern, 100 additional pages 
+are read either based on links or [pickle file](#--pickle-or--p).
+
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -l 100
 ```
-In the above example, along with reading Brain & Human_Brain and tracking links that
-match the match pattern, 100 additional pages are read based on links within pages.
 
-##### --pickle or -p:
-**Description**: Path to pickle file tracking items that are read. This enables to 
+#### --pickle or -p:
+`Description`: Path to pickle file tracking items that are read. This enables to 
 incrementally read items. Pickle file stores a dict. Example:
 ```
     {
@@ -127,11 +128,11 @@ incrementally read items. Pickle file stores a dict. Example:
             
 In the above example, item1 was read previously hence, wont be read again. item2 was 
 not read and will be consider in future reads. item3 errored out in previous reads 
-and will be attempted to read again
+and will not be attempted again
 
-**Default**: ./vars/scanned.pkl
+`Default`: ./vars/scanned.pkl
 
-**Example**:
+`Example`:
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -p scanned.pkl
 ```
@@ -144,12 +145,12 @@ In the above example:
     be read and pickle file will be updated to track read pages and any additional
     links that were encountered in the newly traversed pages
 
-##### --output or -o:
-**Description**: Path for datasets. 
+#### --output or -o:
+`Description`: Path for datasets. 
 
-**Default**: ./vars/datasets/
+`Default`: ./vars/datasets/
 
-**Example**: 
+`Example`: 
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -o ./datasets/
 ```
@@ -157,25 +158,26 @@ In the above example, train, val and test datasets will be created in datasets/
 folder. Future re-runs will append to these files
 
 
-##### --chunk_splitter or -cs: 
-**Description**: This option, along with chunks_per_page defines a page. This comes in 
-handy when creating datasets especially if the data needs to be shuffled.
+#### --chunk_splitter or -cs: 
+`Description`: This option, along with [chunks_per_page](#--chunks_per_page-or--cp) 
+defines a page. This comes in handy when creating datasets, especially, if the 
+data needs to be shuffled.
 
-**Default**: '(?<=[.!?]) +'
+`Default`: '(?<=[.!?]) +'
 
-**Example**:
+`Example`:
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -cs '(?<=[.!?]) +'
 ```
 In the above example, text from wiki pages are split into sentences (chunks) based on ., ! or ?
 
-##### --chunks_per_page or -cp:
-**Description**: This defines pages. i.e. this defines how many chunks for a page. 
+#### --chunks_per_page or -cp:
+`Description`: This defines pages. i.e. this defines number of chunks for a page. 
 This comes in handy when data needs to be shuffled for creating test, train and val datasets.
 
-**Default**: 5
+`Default`: 5
 
-**Example**:
+`Example`:
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -cs '(?<=[.!?]) +' -cp 10
 ```
@@ -184,13 +186,13 @@ In the above example, wiki page is split into chunks based on ., ? or !. And 10 
 chunks form a page. For example, if wiki page has 100 sentences, in the above example,
 groups of 10s are considered to form a page. So, this wiki page contain 10 pages.  
 
-##### --split_ratio or -sr:
-**Description**: Ratio to split the train, val and test datasets. Split happens based on
+#### --split_ratio or -sr:
+`Description`: Ratio to split the train, val and test datasets. Split happens based on
 number of pages. 
 
-**Default**: 80%, 10% and 10% for train, val and test
+`Default`: 80%, 10% and 10% for train, val and test
 
-**Example**:
+`Example`:
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -cs '(?<=[.!?]) +' -cp 10 -sr .8 0.1 0.1
 ```
@@ -202,32 +204,38 @@ on if [shuffle](#--shuffle-or--sf) is on. If shuffle is on, pages are shuffled a
 can make train dataset and any of the remaining 2 pages can be val and test. If shuffle is 
 off, then first 8 pages will be train, next 1 is val and final page is test
 
-##### --datasets or -ds:
+#### --datasets or -ds:
 
-**Description**: Names the datasets
+`Description`: Names the datasets
 
-**Default**: train, val and test
+`Default`: train, val and test
 
-**Example**:
+`Example`:
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -ds set1 set2 set3
+wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -sr 80 20 -ds set1 set2 
 ```
-In the above example, datasets will be called set1, set2 and set3
+In the above example, 2 datasets: set1 & set2 will be created
 
-##### --shuffle or -sf:
-**Description**: Shuffle pages (as defined by [chuck_splitter](#--chunk_splitter-or--cs) and 
-[chunks_per_page](#--chunks_per_page-or--cp)) before creating datasets
+#### --shuffle or -sf:
+`Description`: Shuffle pages (see [chuck_splitter](#--chunk_splitter-or--cs) and 
+[chunks_per_page](#--chunks_per_page-or--cp) for pages) before creating datasets
 
-**Default**: True
+`Default`: True
 
-**Example**:
+`Example`:
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -sf false
 ```
 
 Since shuffle is false in the above example, pages in wiki page will be taken in order. i.e.
 since default ratio is 80%, 10% and 10%, first 80% of this wiki page will be in train, next 10%
-in val and final 10% in test
+in val and final 10% in test.
+
+Actual pages in each of the datasets depend on if shuffle is on. 
+If shuffle is on, pages are shuffled and any 80% page can make train dataset 
+and any of the remaining 20% pages can be val and test. 
+If shuffle is off, then first 80% will be train, next 10% val and final 10% is test
+
 
 
 ### Programmatic Usage
