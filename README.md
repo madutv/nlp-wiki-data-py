@@ -1,8 +1,8 @@
 Create Train, Test and Validation Datasets for NLP from wikipedia. Datasets are created 
-using seed Pages provided and also by traversing links within pages that meet the 
-specified pattern. Idea is to leverage links within wiki pages to create more data. 
-The thought is that wikipedia will already contain links to additional pages 
-that are relevant and links within pages can be narrowed through pattern matching.
+using provided seed WikiPages and also by traversing links within pages that meet the 
+specified match pattern. Idea is to leverage links within wiki pages to create more data. 
+The thought is that wikipedia will already contain links to additional pages  that are 
+relevant and links within pages can be narrowed through pattern matching.
 
 ### Installation
 ## TODO
@@ -10,6 +10,9 @@ that are relevant and links within pages can be narrowed through pattern matchin
     pip install nlp-data-py
 ```
 
+### Usage
+-   [Command line](#command-line)
+-   [Programatic](#programmatic-usage) 
 
 ### Command line
 
@@ -20,12 +23,12 @@ wiki_dataset --seed Brain Human_Brain --match .*neuro|.*neural
 
 In short the above command:
  - **Read Wiki**: Reads Brain and Human_Brain pages from wikipedia
- - **Shuffle**: Shuffles data based on some default criteria 
- (see, chunk_splitter & chunks_per_page for defaults) 
+ - **Shuffle**: Shuffles data based on some default criteria  (see, 
+ [chunk_splitter](#--chunk_splitter-or--cs) & [chunks_per_page](#--chunks_per_page-or--cp) for defaults) 
  - **Create Datasets**: Creates train, validation and test datasets in ./vars/ folder. 
  By default, split ratio is 80%, 10% and 10% for train, val and test datasets
- - **Extract Links**: Extracts any link that match the pattern mentioned in -match 
- option. In this example, links that contain neuro or neural are tracked
+ - **Extract Links**: Extracts any link that match the pattern mentioned in [--match](#--match-or--m) 
+ option. In this example, links containing 'neuro' or 'neural' are tracked
  - **Read More**: Additional 20 pages from the above "Extract Links" are read 
  and appended to datasets and the links in those pages that match pattern 
  are also tracked.
@@ -38,34 +41,34 @@ In short the above command:
  
 #### Command Line Options
 
-- --seed or -s
-- --match or -m
-- --recursive or -r
-- --limit or -l
-- --pickle or -p
-- --output or -o
-- --chunk_splitter or -cs
-- --chunks_per_page or -cp
-- --split_ratio or -sr
-- --datasets or -ds
-- --shuffle or -sf
+- [--seed or -s](#--seed-or--s)
+- [--match or -m](#--match-or--m)
+- [--recursive or -r](#--recursive-or--r)
+- [--limit or -l](#--limit-or--l)
+- [--pickle or -p](#--pickle-or--p)
+- [--output or -o](#--output-or--o)
+- [--chunk_splitter or -cs](#--chunk_splitter-or--cs)
+- [--chunks_per_page or -cp](#--chunks_per_page-or--cp)
+- [--split_ratio or -sr](#--split_ratio-or--sr)
+- [--datasets or -ds](#--datasets-or--ds)
+- [--shuffle or -sf](#--shuffle-or--sf)
 
-##### --seed or -s:
+#### --seed or -s:
 **Description**: List of initial Wiki Page names to start with. 
 
 **Default**: None. If nothing is specified, items in [pickle](#--pickle-or--p) 
-file will be read. If pickle file file dose not exists, nothing will be 
-done and the code exits.
+file will be read. If pickle file dose not exists, nothing will be done and 
+the code exits.
 
 **Example**: 
 ```
 wiki_dataset --seed Brain Human_Brain
 ```
 
-##### --match or -m: 
+#### --match or -m: 
 **Description**: This option serves 2 purpose. One to track links in WikiPages 
-and another to read additional pages either from links or saved pickle file. 
-Links that match the pattern will be considered for current or future reading.
+and another to read additional pages either from links or [saved pickle](#--pickle-or--p) 
+file. Links that match the pattern will be considered to be added to datasets.
 Also see [limit](#--limit-or--l)  
 
 **Default**: "". All links from a wikipage will be considered and tracked.
@@ -77,11 +80,11 @@ wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural
 In the above example, any links that match *neuro* or *neural* will be tracked 
 and/or read to create datasets. 
 
-##### --recursive or -r:
+#### --recursive or -r:
 **Description**: If this option is true, then additional pages will be read 
 either based on links or previously scanned pickle file. This option will 
-be used in conjunction with limit which determines number of additional 
-pages to be read.
+be used in conjunction with limit to determine number of additional 
+pages to read.
 Also see [limit](#--limit-or--l)
 
 
