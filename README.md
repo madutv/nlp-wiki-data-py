@@ -81,16 +81,16 @@ In the above example, any links that match *neuro* or *neural* will be tracked
 and/or read to create datasets. 
 
 #### --recursive or -r:
-**Description**: If this option is true, then additional pages will be read 
+_Description_: If this option is true, then additional pages will be read 
 either based on links or previously scanned pickle file. This option will 
 be used in conjunction with limit to determine number of additional 
 pages to read.
 Also see [limit](#--limit-or--l)
 
 
-**Default**: true
+_Default_: true
 
-**Example**: 
+_`Example`_: 
 ```
 wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -r false
 ```
