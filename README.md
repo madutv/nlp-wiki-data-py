@@ -5,7 +5,6 @@ The thought is, wikipedia will already contain links to additional pages that ar
 relevant and links within pages can be narrowed through pattern matching.
 
 ### Installation
-## TODO
 ```
     pip install nlp-data-py
 ```
