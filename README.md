@@ -1,4 +1,8 @@
-Create Train, Test and Validation Datasets for NLP from wikipedia
+Create Train, Test and Validation Datasets for NLP from wikipedia. Datasets are created 
+using seed Pages provided and also by traversing links within pages that meet the 
+specified pattern. Idea is to leverage links within wiki pages to create more data. 
+The thought is that wikipedia will already contain links to additional pages 
+that are relevant and links within pages can be narrowed through pattern matching.
 
 ### Installation
 ## TODO
@@ -93,20 +97,133 @@ However, links that match the match patter in the above pages will be tracked
 and stored in a pickle file which may be useful in future.
 
 ##### --limit or -l:
+**Description**: Wikipedia may contain way too many links especially when looking 
+at pages recursively. This option limits the number of additional pages to be read.
+This option will only be relevant if recursive is set to true.
+
+**Default** 20
+
+**Example**:
+```
+wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -l 100
+```
+In the above example, along with reading Brain & Human_Brain and tracking links that
+match the match pattern, 100 additional pages are read based on links within pages.
 
 ##### --pickle or -p:
+**Description**: Path to pickle file tracking items that are read. This enables to 
+incrementally read items. Pickle file stores a dict. Example:
+```
+    {
+        "item1": 1,
+        "item2": 0,
+        "item3": -1
+    }
+```
+            
+In the above example, item1 was read previously hence, wont be read again. item2 was 
+not read and will be consider in future reads. item3 errored out in previous reads 
+and will be attempted to read again
+
+**Default**: ./vars/scanned.pkl
+
+**Example**:
+```
+wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -p scanned.pkl
+```
+In the above example:
+-   Brain & Human_Brain and 20 pages matching pattern are read and stored as read 
+    in the pickle file. Any additional links that were not read due to reaching
+    the limit will be stored as unread in the pickle file
+-   If the above command is re-run, all the read pages including seed will not
+    be read again. Instead, additional unread pages from pickle file will
+    be read and pickle file will be updated to track read pages and any additional
+    links that were encountered in the newly traversed pages
 
 ##### --output or -o:
+**Description**: Path for datasets. 
 
-##### --chunk_splitter or -cs:
+**Default**: ./vars/datasets/
+
+**Example**: 
+```
+wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -o ./datasets/
+```
+In the above example, train, val and test datasets will be created in datasets/
+folder. Future re-runs will append to these files
+
+
+##### --chunk_splitter or -cs: 
+**Description**: This option, along with chunks_per_page defines a page. This comes in 
+handy when creating datasets especially if the data needs to be shuffled.
+
+**Default**: '(?<=[.!?]) +'
+
+**Example**:
+```
+wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -cs '(?<=[.!?]) +'
+```
+In the above example, text from wiki pages are split into sentences (chunks) based on ., ! or ?
 
 ##### --chunks_per_page or -cp:
+**Description**: This defines pages. i.e. this defines how many chunks for a page. 
+This comes in handy when data needs to be shuffled for creating test, train and val datasets.
+
+**Default**: 5
+
+**Example**:
+```
+wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -cs '(?<=[.!?]) +' -cp 10
+```
+
+In the above example, wiki page is split into chunks based on ., ? or !. And 10 contiguous 
+chunks form a page. For example, if wiki page has 100 sentences, in the above example,
+groups of 10s are considered to form a page. So, this wiki page contain 10 pages.  
 
 ##### --split_ratio or -sr:
+**Description**: Ratio to split the train, val and test datasets. Split happens based on
+number of pages. 
+
+**Default**: 80%, 10% and 10% for train, val and test
+
+**Example**:
+```
+wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -cs '(?<=[.!?]) +' -cp 10 -sr .8 0.1 0.1
+```
+
+If a wiki page has 10 pages (as defined by [chuck_splitter](#--chunk_splitter-or--cs) and 
+[chunks_per_page](#--chunks_per_page-or--cp)), then in the above example, train will contain
+8, val and test will contain 1 each. Note that the actual page in each of these datasets depend
+on if [shuffle](#--shuffle-or--sf) is on. If shuffle is on, pages are shuffled and any 8 page
+can make train dataset and any of the remaining 2 pages can be val and test. If shuffle is 
+off, then first 8 pages will be train, next 1 is val and final page is test
 
 ##### --datasets or -ds:
 
+**Description**: Names the datasets
+
+**Default**: train, val and test
+
+**Example**:
+```
+wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -ds set1 set2 set3
+```
+In the above example, datasets will be called set1, set2 and set3
+
 ##### --shuffle or -sf:
+**Description**: Shuffle pages (as defined by [chuck_splitter](#--chunk_splitter-or--cs) and 
+[chunks_per_page](#--chunks_per_page-or--cp)) before creating datasets
+
+**Default**: True
+
+**Example**:
+```
+wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -sf false
+```
+
+Since shuffle is false in the above example, pages in wiki page will be taken in order. i.e.
+since default ratio is 80%, 10% and 10%, first 80% of this wiki page will be in train, next 10%
+in val and final 10% in test
 
 
 ### Programmatic Usage
@@ -119,6 +236,28 @@ from dataset import WikiDataset
 WikiDataset.create_dataset_from_wiki(seeds=['Brain', 'Human_brain'], match=".*neuro")
 
 ```
+In the above example,
+- Brain will be read from wikipedia
+- contents will be broken to pages as defined by default book. ([chuck_splitter](#--chunk_splitter-or--cs) and 
+[chunks_per_page](#--chunks_per_page-or--cp))
+- pages will be shuffled
+- pages will be split as defined by default splitter 
+([split_ratio](#--split_ratio-or--sr), [datasets](#--datasets-or--ds), [shuffle](#--shuffle-or--sf))
+- links will be extracted from the page
+- links matching patter in match (in this case links containing 'neuro')
+  will be added to self.scanned if they are not already there
+- Brain will be set to 1 in self.scanned to indicate that this
+  page is already read
+- same steps are repeated with 'Medulla_oblongata'
+- since recursive is set to true, and limit is 20, next
+  20 unread items from self.scanned will be read and their
+  links will be tracked in self.scanned
+- finally self.scanned is written to a pickle file
+- if the same code is run again, pickle file will be read
+  and since Brain and Medulla oblangata are already read,
+  they will be skipped and next 20 items from self.scanned
+  are read
+
 
 Below is an example where default options are overridden:
 
