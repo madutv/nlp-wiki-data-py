@@ -14,6 +14,7 @@ build/
 nlp_data_py/tests/datasets/
 develop-eggs/
 dist/
+tests/datasets/
 downloads/
 eggs/
 .eggs/
