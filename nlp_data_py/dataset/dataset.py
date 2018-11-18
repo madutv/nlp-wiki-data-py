@@ -1,49 +1,53 @@
 import re
 from abc import abstractmethod
-from commons import Book, Splitter
-from commons import FileUtils as fu
+from nlp_data_py.commons.bookdef import Book
+from nlp_data_py.commons.splitter import Splitter
+from nlp_data_py.commons.utils.fileutils import FileUtils as fu
 
 
 class Dataset:
     """Abstract class to create datasets like train, test and val
 
     Args:
-        scanned_pickle: Path to pickle file tracking items that are
-        read. This enables to incrementally read items. Pickle file
-        stores a dict. Example:
-        {
-                "item1": 1,
-                "item2": 0,
-                "item3": -1
-        }
-        In the above example, item1 was read previously hence, wont
-        be read again. item2 was not read and will be consider in
-        future reads. item3 errored out in previous reads and will
-        be attempted to read again
+        scanned_pickle: Path to pickle file tracking items that are read.
+            This enables to incrementally read items. Pickle file
+            stores a dict. Example:
+            {
+                    "item1": 1,
+                    "item2": 0,
+                    "item3": -1
+            }
+            In the above example, item1 was read previously hence, wont
+            be read again. item2 was not read and will be consider in
+            future reads. item3 errored out in previous reads and will
+            be attempted to read again
 
 
         match: regular expression as string. Only items matching
-        regular expression will be read for creating datasets
+            regular expression will be read for creating datasets
 
         save_dataset_path: Path to folder where the datasets will
-        be saved.
+            be saved.
 
         book_def: Book. This object defines a book. Default is
-        5 sentences per page. Each sentence is by default defined
-        as string ending in . ! or ?
+            5 sentences per page. Each sentence is by default defined
+            as string ending in . ! or ?
 
         splitter: Splitter: Defines how to split datasets.
-        Default is to create train, val and test sets in the
-        ratio of 80%, 10% & 10% respectively. Also, by default
-        shuffle is set to true. With shuffle set to true, pages,
-        as defined by book_def will be shuffled before creating
-        datasets
+            Default is to create train, val and test sets in the
+            ratio of 80%, 10% & 10% respectively. Also, by default
+            shuffle is set to true. With shuffle set to true, pages,
+            as defined by book_def will be shuffled before creating
+            datasets
+
 
     Once the datasets are created, the items that are covered is
     tracked as self.scanned. This is written to a pickle file. This
     helps in continuing to update dataset at a latter point in time
 
+
     """
+
     def __init__(self, name: str, scanned_pickle, match,  save_dataset_path,
                  book_def: Book, splitter: Splitter):
 

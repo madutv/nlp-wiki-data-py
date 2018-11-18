@@ -11,6 +11,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+nlp_data_py/tests/datasets/
 develop-eggs/
 dist/
 downloads/

@@ -1,13 +1,14 @@
 from pathlib import Path
 import pickle
 import os
-from commons.utils.logging import Logging
+from nlp_data_py.commons.utils.logging import Logging
 from logging import Logger
 
 
 class FileUtils:
     """Simple util to quickly read and write files.
     Nothing much here
+
     """
 
     logger: Logger = Logging.get_logger("FileUtils")
@@ -100,10 +101,16 @@ class FileUtils:
 
     @staticmethod
     def file_exist(path):
+        """Checks if file exists
+
+        """
         return Path(path).exists()
 
     @staticmethod
     def mkdir(path):
+        """Make directory if it dose not already exists
+
+        """
         try:
             os.makedirs(path, exist_ok=True)
         except Exception as e:

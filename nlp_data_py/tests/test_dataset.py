@@ -1,6 +1,5 @@
-import pytest
-from dataset import WikiDataset
-from commons import Book, Splitter, FileUtils
+from nlp_data_py import WikiDataset
+from nlp_data_py import Book, Splitter, FileUtils
 
 
 default_txt_book = "World peace! or peace on Earth, is the concept of an ideal state of happiness, " \

@@ -1,5 +1,5 @@
 import pytest
-from commons import Book
+from nlp_data_py import Book
 
 
 @pytest.fixture

@@ -1,7 +1,7 @@
 import re
 import math
 from logging import Logger
-from commons import Logging
+from nlp_data_py.commons.utils.logging import Logging
 
 
 class Book:
@@ -9,24 +9,25 @@ class Book:
     will manage things like spliting the contents, based on delimiter,
     chunking contents into pages. These pages can then be used to create
     train, test and val sets.
+
+    Args:
+        chunk_splitter:regular expression. Pattern on which to split the text
+        chunks_per_page: int: Number of chunks that make up a page
+
+    Example:
+    ::
+
+        book_def: Book = Book(chunk_splitter='(?<=[.!?]) +', chunks_per_page=2)
+        book_def.text = "This is. A Simple. Book! That makes. No Sense?"
+
+        println(book_def.num_of_chunks)
+        >>> 5
+        println(book_def.num_of_pages)
+        >>> 3
+
     """
 
     def __init__(self, chunk_splitter='(?<=[.!?]) +', chunks_per_page=5):
-        """Create Book object based on provided test
-
-        Args:
-            text:str Text for book
-            chunk_splitter:regular expression. Pattern on which to split the text
-            chunks_per_page: int: Number of chunks that make up a page
-
-        Properties:
-            text
-            chunk_splitter
-            chunks_per_page
-            chucks: Array[str]: Actual chunks after splitting on reg_ex
-            num_of_chunks
-            num_of_pages: pages in the book. num_of_chunks/chunks_per_page
-        """
         self.logger: Logger = Logging.get_logger("Book")
         self.chunk_splitter = chunk_splitter
         self.chunks_per_page = chunks_per_page
@@ -35,6 +36,16 @@ class Book:
 
     @property
     def text(self):
+        """This is content of entire book and has to be set before reading pages.
+        Once this property is set, below properties will be availableself.
+
+        chucks: Array[str]: Actual chunks after splitting text on reg_ex
+
+        num_of_chunks: Number of chunks in the book
+
+        num_of_pages: pages in the book. num_of_chunks/chunks_per_page
+
+        """
         return self.__text
 
     @text.setter

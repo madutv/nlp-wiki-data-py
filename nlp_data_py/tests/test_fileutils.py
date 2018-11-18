@@ -1,5 +1,5 @@
 import pytest
-from commons import FileUtils
+from nlp_data_py import FileUtils
 import os
 
 

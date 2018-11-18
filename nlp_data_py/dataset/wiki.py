@@ -1,7 +1,8 @@
 import wikipedia
 from itertools import count
-from commons import Splitter, Book
-from dataset import Dataset
+from nlp_data_py.commons.bookdef import Book
+from nlp_data_py.commons.splitter import Splitter
+from nlp_data_py.dataset.dataset import Dataset
 
 
 class WikiDataset(Dataset):
@@ -11,51 +12,52 @@ class WikiDataset(Dataset):
     Args:
 
         book_def: Book. This object defines a book. Default is
-        5 sentences per page. Each sentence is by default defined
-        as string ending in . ! or ?
+            5 sentences per page. Each sentence is by default defined
+            as string ending in . ! or ?
 
         splitter: Splitter: Defines how to split datasets.
-        Default is to create train, val and test sets in the
-        ratio of 80%, 10% & 10% respectively. Also, by default
-        shuffle is set to true. With shuffle set to true, pages,
-        as defined by book_def will be shuffled before creating
-        datasets
+            Default is to create train, val and test sets in the
+            ratio of 80%, 10% & 10% respectively. Also, by default
+            shuffle is set to true. With shuffle set to true, pages,
+            as defined by book_def will be shuffled before creating
+            datasets
 
         seeds: List of dataset pages. If seeds are specified and recursive
-        is false, only items in seeds will be read.
-        If seeds are specified and recursive is True, seeds will be
-        read first and then additional pages upto limit will be read
+            is false, only items in seeds will be read.
+            If seeds are specified and recursive is True, seeds will be
+            read first and then additional pages upto limit will be read
 
         match: regular expression as string. Only items matching
-        regular expression will be read for creating datasets
+            regular expression will be read for creating datasets
 
         recursive: Boolean: Default True. This flag indicates if
-        additional should be read or tracked.
-        i.e. Links in the wikipages will be tracked extracted and
-        tracked in scanned variable which will then be written to
-        pickle file
+            additional should be read or tracked.
+            i.e. Links in the wikipages will be tracked extracted and
+            tracked in scanned variable which will then be written to
+            pickle file
 
         limit: int: default 20. Number of additional pages to be
-        read in addition to seeds. These pages are read from
-        self.scanned variable
+            read in addition to seeds. These pages are read from
+            self.scanned variable
 
         scanned_pickle: Path to pickle file tracking items that are
-        read. This enables to incrementally read items. Pickle file
-        stores a dict. Example:
-        {
-                "item1": 1,
-                "item2": 0,
-                "item3": -1
-        }
-        In the above example, item1 was read previously hence, wont
-        be read again. item2 was not read and will be consider in
-        future reads. item3 errored out in previous reads and will
-        be attempted to read again
+            read. This enables to incrementally read items. Pickle file
+            stores a dict. Example:
+            {
+                    "item1": 1,
+                    "item2": 0,
+                    "item3": -1
+            }
+            In the above example, item1 was read previously hence, wont
+            be read again. item2 was not read and will be consider in
+            future reads. item3 errored out in previous reads and will
+            be attempted to read again
 
         save_dataset_path: Path to folder where the datasets will
-        be saved.
+            be saved.
 
     """
+
     def __init__(self, book_def, splitter, seeds=[], match="", recursive=True,
                        limit=20, scanned_pickle="./vars/scanned.pkl",
                        save_dataset_path="./vars/"):
@@ -79,51 +81,52 @@ class WikiDataset(Dataset):
         Args:
 
             seeds: List of dataset pages. If seeds are specified and recursive
-            is false, only items in seeds will be read.
-            If seeds are specified and recursive is True, seeds will be
-            read first and then additional pages upto limit will be read
+                is false, only items in seeds will be read.
+                If seeds are specified and recursive is True, seeds will be
+                read first and then additional pages upto limit will be read
 
             match: regular expression as string. Only items matching
-            regular expression will be read for creating datasets
+                regular expression will be read for creating datasets
 
             recursive: Boolean: Default True. This flag indicates if
-            additional should be read or tracked.
-            i.e. Links in the wikipages will be tracked extracted and
-            tracked in scanned variable which will then be written to
-            pickle file
+                additional should be read or tracked.
+                i.e. Links in the wikipages will be tracked extracted and
+                tracked in scanned variable which will then be written to
+                pickle file
 
             limit: int: default 20. Number of additional pages to be
-            read in addition to seeds. These pages are read from
-            self.scanned variable
+                read in addition to seeds. These pages are read from
+                self.scanned variable
 
             scanned_pickle: Path to pickle file tracking items that are
-            read. This enables to incrementally read items. Pickle file
-            stores a dict. Example:
-            {
-                    "item1": 1,
-                    "item2": 0,
-                    "item3": -1
-            }
-            In the above example, item1 was read previously hence, wont
-            be read again. item2 was not read and will be consider in
-            future reads. item3 errored out in previous reads and will
-            be attempted to read again
+                read. This enables to incrementally read items. Pickle file
+                stores a dict. Example:
+                {
+                        "item1": 1,
+                        "item2": 0,
+                        "item3": -1
+                }
+                In the above example, item1 was read previously hence, wont
+                be read again. item2 was not read and will be consider in
+                future reads. item3 errored out in previous reads and will
+                be attempted to read again
 
             save_dataset_path: Path to folder where the datasets will
-            be saved.
+                be saved.
 
             book_def: Book. This object defines a book. Default is
-            5 sentences per page. Each sentence is by default defined
-            as string ending in . ! or ?
+                5 sentences per page. Each sentence is by default defined
+                as string ending in . ! or ?
 
             splitter: Splitter: Defines how to split datasets.
-            Default is to create train, val and test sets in the
-            ratio of 80%, 10% & 10% respectively. Also, by default
-            shuffle is set to true. With shuffle set to true, pages,
-            as defined by book_def will be shuffled before creating
-            datasets
+                Default is to create train, val and test sets in the
+                ratio of 80%, 10% & 10% respectively. Also, by default
+                shuffle is set to true. With shuffle set to true, pages,
+                as defined by book_def will be shuffled before creating
+                datasets
 
         Example:
+
             create_dataset_from_wiki(['Brain', 'Medulla_oblongata'])
 
             In the above example,
@@ -145,6 +148,7 @@ class WikiDataset(Dataset):
                   and since Brain and Medulla oblangata are already read,
                   they will be skipped and next 20 items from self.scanned
                   are read
+
 
         """
 

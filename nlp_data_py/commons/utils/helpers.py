@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List
 from logging import Logger
-from commons.utils.logging import Logging
+from nlp_data_py.commons.utils.logging import Logging
 
 
 class Helpers:
@@ -22,6 +22,7 @@ class Helpers:
 
         Example:
         ::
+
             generate_random_shuffle(10) may produce
             shuffled list rangning from 0 and 9
 
@@ -43,6 +44,7 @@ class Helpers:
 
         Example:
         ::
+
             normalize_ratios([8, 2, 2]) will produce
             [0.8, 0.2, 0.2]
 
@@ -74,6 +76,7 @@ class Helpers:
             extend_list([1,2,3], 0, 5) will produce [1, 2, 3, 0, 0, 0, 0, 0]
 
         """
+
         Helpers.logger.debug(f"Params: {lst} {ext_with} {times}")
         lst.extend([ext_with] * times)
 
@@ -99,6 +102,7 @@ class Helpers:
             produce keep first the same but changes 2nd one to [1, 2, 0]
 
         """
+
         diff = len(list1) - len(list2)
         Helpers.logger.debug(f"Diff between {list1} and {list2}: {diff}")
         if diff < 0:
@@ -132,6 +136,7 @@ class Helpers:
             assert list4 == [3, 4, 2, 2, 2]
 
         """
+
         lengths = [len(l) for l in lists]
         Helpers.logger.debug(f"Lengths of all list: {lengths}")
         max_length = max(lengths)

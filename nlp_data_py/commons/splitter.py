@@ -1,7 +1,7 @@
 from typing import List
 import math
-from commons import Helpers
-from commons import Logging
+from nlp_data_py.commons.utils.helpers import Helpers
+from nlp_data_py.commons.utils.logging import Logging
 from logging import Logger
 
 
@@ -9,11 +9,31 @@ class Splitter:
     """Splits pages in a book to datasets. This class will simple determine
     what page numbers make each datasets.
 
+    Args:
+        num_of_pages: Book.
+        split_ratios: ratio to split the book. Default
+            ratio is 90% train, 5% val and 5% test
+        dataset_names: dataset names to be split to
+        shuffle: shuffle pages
+
+    Properties:
+        ds_to_pages: Contains the dict of datasets and page number in
+        each of the datasets.
+
     Example:
     ::
-        SplitBook(Book)
-        splits book into train, val and test with a default ratio
-        of 90%, 5% and 5% respectively.
+
+        splitter: Splitter = Splitter(split_ratios=[0.8, 0.1, 0.1], dataset_names=['train', 'val', 'test'], shuffle=True)
+        splitter.num_of_pages = 10
+
+        print(splitter.shuffled_pages)
+        >>> [4, 3, 1, 0, 8, 6, 9, 7, 2, 5]
+        print(splitter.ds_to_page)
+        >>> {
+                'train': [4, 3, 1, 0, 8, 6, 9, 7]
+                'val': [2]
+                'test': [5]
+            }
 
     """
     logger: Logger = Logging.get_logger("SplitBook")
@@ -22,21 +42,6 @@ class Splitter:
                  split_ratios: List[float]=[0.8, 0.1, 0.1],
                  dataset_names: List[str]=['train', 'val', 'test'],
                  shuffle=True):
-        """Create Book Splitter. Pages belonging to a book can be
-        retrieved via ds_to_pages dict property
-
-        Args:
-            num_of_pages: Book.
-            split_ratios: ratio to split the book. Default
-                ratio is 90% train, 5% val and 5% test
-            dataset_names: dataset names to be split to
-            shuffle: shuffle pages
-
-        ds_to_pages contain the dict of datasets and page number in
-        each of the datasets.
-
-        """
-
         self.split_ratios = split_ratios
         self.dataset_names = dataset_names
         self.shuffle = shuffle
@@ -45,6 +50,12 @@ class Splitter:
 
     @property
     def num_of_pages(self):
+        """Number of pages for splitting. Once num_of_pages is set ds_to_page dict will be availabe.
+
+        ds_to_pages: Contains the dict of datasets and page number in each of the datasets.
+
+        """
+
         return self.__num_of_pages
 
     @num_of_pages.setter
@@ -56,6 +67,10 @@ class Splitter:
 
     @property
     def shuffled_pages(self):
+        """List of shuffled page number if shuffle is true, else just ordered page numbers.
+
+        """
+
         return self.__shuffled_pages
 
     @shuffled_pages.setter
@@ -78,6 +93,7 @@ class Splitter:
 
         Returns:
             Normalized ratio and datasetnames
+
         """
         if len(split_ratios) == len(dataset_names) == 0:
             split_ratios = [1]
@@ -90,6 +106,8 @@ class Splitter:
         """creates a dict of dataset names and page numbers.
 
         Example:
+        ::
+
             This returns somethings like
             {
                "train": [0, 1, 4, 8, 9, 3, 6]
@@ -100,6 +118,7 @@ class Splitter:
             and so on for val and test
 
         """
+
         self.split_ratios, self.dataset_names = Splitter.match_splitratios_and_datasetnames(self.split_ratios, self.dataset_names)
         num_of_pages = len(self.shuffled_pages)
         pages_per_ds = [math.ceil(num_of_pages * r) for r in self.split_ratios]

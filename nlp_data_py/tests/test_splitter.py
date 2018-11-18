@@ -1,5 +1,5 @@
 import pytest
-from commons import Splitter
+from nlp_data_py import Splitter
 
 
 @pytest.fixture

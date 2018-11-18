@@ -1,6 +1,6 @@
 import pytest
-from dataset import WikiDataset
-from commons import Book, Splitter
+from nlp_data_py import WikiDataset
+from nlp_data_py import Book, Splitter
 
 
 book_def: Book = Book(chunk_splitter='(?<=[.!?]) +', chunks_per_page=2)

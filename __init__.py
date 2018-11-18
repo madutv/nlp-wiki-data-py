@@ -1,1 +1,0 @@
-name = "nlp-data-py"

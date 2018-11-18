@@ -1,8 +1,7 @@
 import argparse
-from dataset.constants import *
-from commons import Book, Splitter
-from dataset import WikiDataset
-from decimal import Decimal
+from nlp_data_py.commons.bookdef import Book
+from nlp_data_py.commons.splitter import Splitter
+from nlp_data_py.dataset.wiki import WikiDataset
 
 
 def wiki_dataset():
