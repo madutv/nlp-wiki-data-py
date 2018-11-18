@@ -15,6 +15,11 @@ nlp_data_py/tests/datasets/
 develop-eggs/
 tests/datasets/
 dist/
+docs/build/
+docs/Makefile
+docs/make.bat
+docs/source/_static
+docs/source/_templates
 tests/datasets/
 downloads/
 eggs/
