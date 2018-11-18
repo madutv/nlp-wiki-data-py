@@ -13,6 +13,7 @@ __pycache__/
 build/
 nlp_data_py/tests/datasets/
 develop-eggs/
+tests/datasets/
 dist/
 downloads/
 eggs/
