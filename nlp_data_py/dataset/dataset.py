@@ -48,7 +48,7 @@ class Dataset:
 
     """
 
-    def __init__(self, name: str, scanned_pickle, match,  save_dataset_path,
+    def __init__(self, name, scanned_pickle, match,  save_dataset_path,
                  book_def: Book, splitter: Splitter):
 
         self.name = name
