@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='nlp-data-py',
-    version="0.0.3",
+    version="0.0.4",
     author="Madhu TV",
     author_email="madhavi.tv@gmail.com",
     description="Create Test, Train and Validation datasets for NLP. "
@@ -14,6 +14,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/madutv/nlp-data-py.git",
     packages=setuptools.find_packages(),
+    install_requires=['numpy', 'wikipedia'],
     entry_points={
         'console_scripts': [
             'wiki_dataset=dataset.command_line:wiki_dataset',
