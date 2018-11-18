@@ -16,9 +16,9 @@ def wiki_dataset():
     parser.add_argument('-cs', '--chunk_splitter', type=str, default='(?<=[.!?]) +', help=chunk_splitter_help)
     parser.add_argument('-cp', '--chunks_per_page', type=int, default=5, help=chunks_per_page_help)
 
-    parser.add_argument('-sr', '--split_ratio', nargs="*", default=[0.8, 0.1, 0.1], help=split_ratio_help)
+    parser.add_argument('-sr', '--split_ratio', nargs="*", type=float, default=[0.8, 0.1, 0.1], help=split_ratio_help)
     parser.add_argument('-ds', '--datasets', nargs="*", default=["train", "val", "test"], help=datasets_help)
-    parser.add_argument('-sf', '--shuffle', type=bool, default=True, help=shuffle_help)
+    parser.add_argument('-sf', '--shuffle', type=str2bool, default=True, help=shuffle_help)
 
     args = parser.parse_args()
 

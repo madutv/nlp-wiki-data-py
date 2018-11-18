@@ -78,7 +78,7 @@ Also see [limit](#--limit-or--l)
 and/or read to create datasets. 
 
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural
+wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural"
 ```
 
 #### --recursive or -r:
@@ -96,7 +96,7 @@ However, links that match the match patter from these pages will be tracked
 and stored in a pickle file which may be used later on.
 
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -r false
+wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural" -r false
 ```
 
 #### --limit or -l:
@@ -111,7 +111,7 @@ and tracking links that match the match pattern, 100 additional pages
 are read either based on links or [pickle file](#--pickle-or--p).
 
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -l 100
+wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural" -l 100
 ```
 
 #### --pickle or -p:
@@ -133,7 +133,7 @@ and will not be attempted again
 
 `Example`:
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -p scanned.pkl
+wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural" -p scanned.pkl
 ```
 In the above example:
 -   Brain & Human_Brain and 20 pages matching pattern are read and stored as read 
@@ -151,7 +151,7 @@ In the above example:
 
 `Example`: 
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -o ./datasets/
+wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural" -o ./datasets/
 ```
 In the above example, train, val and test datasets will be created in datasets/
 folder. Future re-runs will append to these files
@@ -166,7 +166,7 @@ data needs to be shuffled.
 
 `Example`:
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -cs '(?<=[.!?]) +'
+wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural" -cs '(?<=[.!?]) +'
 ```
 In the above example, text from wiki pages are split into sentences (chunks) based on ., ! or ?
 
@@ -178,7 +178,7 @@ This comes in handy when data needs to be shuffled for creating test, train and 
 
 `Example`:
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -cs '(?<=[.!?]) +' -cp 10
+wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural" -cs '(?<=[.!?]) +' -cp 10
 ```
 
 In the above example, wiki page is split into chunks based on ., ? or !. And 10 contiguous 
@@ -193,7 +193,7 @@ number of pages.
 
 `Example`:
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -cs '(?<=[.!?]) +' -cp 10 -sr .8 0.1 0.1
+wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural" -cs '(?<=[.!?]) +' -cp 10 -sr .8 0.1 0.1
 ```
 
 If a wiki page has 10 pages (as defined by [chuck_splitter](#--chunk_splitter-or--cs) and 
@@ -276,8 +276,8 @@ Below is an example where default options are overridden:
 from nlp_data_py import WikiDataset
 from nlp_data_py import Book, Splitter
 
-scanned_pickle = "/User/vars/scanned.pkl"
-save_dataset_path = "/User/datasets/"
+scanned_pickle = "./scanned.pkl"
+save_dataset_path = "./datasets/"
 
 book_def: Book = Book(chunk_splitter='(?<=[.!?]) +', chunks_per_page=2)
 splitter: Splitter = Splitter(split_ratios=[0.5, 0.25, 0.25], dataset_names=['train', 'val', 'test'], shuffle=False)
