@@ -242,7 +242,7 @@ If shuffle is off, then first 80% will be train, next 10% val and final 10% is t
 Below is a simple example:
 
 ```python
-from dataset import WikiDataset
+from nlp_data_py import WikiDataset
 
 WikiDataset.create_dataset_from_wiki(seeds=['Brain', 'Human_brain'], match=".*neuro")
 
@@ -273,8 +273,8 @@ In the above example,
 Below is an example where default options are overridden:
 
 ```python
-from dataset import WikiDataset
-from commons import Book, Splitter
+from nlp_data_py import WikiDataset
+from nlp_data_py import Book, Splitter
 
 scanned_pickle = "/User/vars/scanned.pkl"
 save_dataset_path = "/User/datasets/"
