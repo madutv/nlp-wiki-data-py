@@ -211,7 +211,7 @@ off, then first 8 pages will be train, next 1 is val and final page is test
 
 `Example`:
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -sr 80 20 -ds set1 set2 
+wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural" -sr 80 20 -ds set1 set2 
 ```
 In the above example, 2 datasets: set1 & set2 will be created
 
@@ -223,7 +223,7 @@ In the above example, 2 datasets: set1 & set2 will be created
 
 `Example`:
 ```
-wiki_dataset --seed Brain Human_Brain -m .*neuro|.*neural -sf false
+wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural" -sf false
 ```
 
 Since shuffle is false in the above example, pages in wiki page will be taken in order. i.e.
