@@ -36,9 +36,16 @@ class FileUtils:
         try:
             FileUtils.logger.debug(f"Writing to : {file}")
             Path(file).open(mode).write(content)
+        except UnicodeEncodeError as u:
+            try:
+                Path(file).open(mode, encoding='utf-8').write(content)
+            except Exception as ue:
+                FileUtils.logger.error(f"Exception while writing to file Retrying with uft-8 failed too: {ue} {type(ue).__name__}")
+                raise ue
         except Exception as e:
             FileUtils.logger.error(f"Exception while writing to file : {e}")
-            raise
+            raise e
+
 
     @staticmethod
     def read_file(file):

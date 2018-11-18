@@ -56,6 +56,7 @@ class Book:
         self.num_of_pages = math.ceil(float(self.num_of_chunks)/self.chunks_per_page)
         self.logger.debug(f"num_of_chunks: {self.num_of_chunks}")
         self.logger.debug(f"num_of_pages: {self.num_of_pages}")
+        print(f"num_of_pages: {self.num_of_pages}")
 
     def read_page(self, page_number):
         """Reads the content of the page.

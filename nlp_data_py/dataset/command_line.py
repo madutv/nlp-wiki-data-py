@@ -37,7 +37,6 @@ def wiki_dataset():
 
     print(f"Ins: {ins}")
 
-
     wiki = WikiDataset.create_dataset_from_wiki(seeds=ins['seed'],
                                                  match=ins['match'],
                                                  recursive=ins['recursive'],

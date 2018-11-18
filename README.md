@@ -169,6 +169,7 @@ data needs to be shuffled.
 wiki_dataset --seed Brain Human_Brain -m ".*neuro|.*neural" -cs '(?<=[.!?]) +'
 ```
 In the above example, text from wiki pages are split into sentences (chunks) based on ., ! or ?
+**Note**: On windows, use double quotes like -cs "(?<=[.!?]) +"
 
 #### --chunks_per_page or -cp:
 `Description`: This defines pages. i.e. this defines number of chunks for a page. 
